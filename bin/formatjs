@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+"use strict";
+
+var fjs = require('nuclide-format-js-base');
+var updateCursor = require('nuclide-update-cursor').updateCursor;
+var stdin = require('stdin');
+var parseArgv = require('minimist');
+
+var argv = parseArgv(process.argv.slice(2));
+
+stdin(function (source) {
+  var result = fjs.transform(source, {
+    moduleMap: fjs.createModuleMap({
+      paths: [],
+      pathsToRelativize: [],
+      aliases: fjs.defaultAliases,
+      aliasesToRelativize: new Map(),
+      builtIns: fjs.defaultBuiltIns,
+      builtInTypes: fjs.defaultBuiltInTypes,
+    }),
+  });
+
+  var cursor = updateCursor(
+    source,
+    {row: argv.row, column: argv.col},
+    result
+  );
+  // we do want a linebread at the end. Cursor position is just space
+  // separated number on the 1st line
+  console.log(cursor.row, cursor.column);
+
+  // we don't want a line break at the end, so we don't use console log
+  process.stdout.write(result);
+});
+
