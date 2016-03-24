@@ -1,6 +1,6 @@
 {
   "name": "format-js-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Command line binary for the nuclide-format-js module, allowing you to format JS from the cli",
   "main": "index.js",
   "scripts": {
@@ -14,8 +14,8 @@
   "author": "Gilles Ruppert <gillesruppert@fb.com>",
   "dependencies": {
     "minimist": "^1.2.0",
-    "nuclide-format-js-base": "0.0.34",
-    "nuclide-update-cursor": "0.0.34",
+    "nuclide-format-js-base": "0.0.35",
+    "nuclide-update-cursor": "0.0.35",
     "stdin": "0.0.1"
   }
 }

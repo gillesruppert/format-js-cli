@@ -25,7 +25,7 @@ stdin(function (source) {
     {row: argv.row, column: argv.col},
     result
   );
-  // we do want a linebread at the end. Cursor position is just space
+  // we do want a linebreak at the end. Cursor position is just space
   // separated number on the 1st line
   console.log(cursor.row, cursor.column);
 
