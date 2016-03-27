@@ -9,14 +9,32 @@ var parseArgv = require('minimist');
 var argv = parseArgv(process.argv.slice(2));
 
 stdin(function (source) {
+  let builtIns = fjs.defaultBuiltIns;
+  if (argv.builtins) {
+    argv.builtins.split(',').forEach((t) => builtIns.add(t.trim()));
+  }
+
+  let builtInTypes = fjs.defaultBuiltInTypes;
+  if (argv.builtintypes) {
+    argv.builtintypes.split(',').forEach((t) => builtInTypes.add(t.trim()));
+  }
+
+  let aliases = fjs.defaultAliases;
+  if (argv.aliases) {
+    const allParts = argv.aliases.split(',');
+    for(let i = 0; i < allParts.length; i+=2) {
+      aliases.set(allParts[i], allParts[i+1]);
+    }
+  }
+
   var result = fjs.transform(source, {
     moduleMap: fjs.createModuleMap({
       paths: [],
       pathsToRelativize: [],
-      aliases: fjs.defaultAliases,
+      aliases,
       aliasesToRelativize: new Map(),
-      builtIns: fjs.defaultBuiltIns,
-      builtInTypes: fjs.defaultBuiltInTypes,
+      builtIns,
+      builtInTypes,
     }),
   });
 
